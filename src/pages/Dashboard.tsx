@@ -6,36 +6,69 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LabRecord {
   id: string;
-  studentName: string;
+  student_name: string;
   subject: string;
-  experimentTitle: string;
-  createdAt: string;
+  experiment_title: string;
+  created_at: string;
 }
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const [records, setRecords] = useState<LabRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedRecords = JSON.parse(localStorage.getItem("labRecords") || "[]");
-    setRecords(savedRecords);
-  }, []);
+    if (user) {
+      fetchRecords();
+    }
+  }, [user]);
 
-  const handleDelete = (id: string) => {
-    const updatedRecords = records.filter((record) => record.id !== id);
-    setRecords(updatedRecords);
-    localStorage.setItem("labRecords", JSON.stringify(updatedRecords));
-    toast.success("Record deleted successfully");
+  const fetchRecords = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("lab_records")
+        .select("*")
+        .eq("user_id", user?.id)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      setRecords(data || []);
+    } catch (error: any) {
+      console.error("Error fetching records:", error);
+      toast.error("Failed to load records");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this record?")) return;
+
+    try {
+      const { error } = await supabase.from("lab_records").delete().eq("id", id);
+
+      if (error) throw error;
+
+      setRecords(records.filter((record) => record.id !== id));
+      toast.success("Record deleted successfully");
+    } catch (error: any) {
+      console.error("Error deleting record:", error);
+      toast.error("Failed to delete record");
+    }
   };
 
   const filteredRecords = records.filter(
     (record) =>
-      record.experimentTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      record.experiment_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       record.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      record.studentName.toLowerCase().includes(searchQuery.toLowerCase())
+      record.student_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const getRecordColor = (index: number) => {
@@ -83,7 +116,11 @@ const Dashboard = () => {
           </div>
 
           {/* Records Grid */}
-          {filteredRecords.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            </div>
+          ) : filteredRecords.length === 0 ? (
             <Card className="glass-card border-border/50 p-12 text-center">
               <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-card-foreground mb-2">
@@ -120,14 +157,14 @@ const Dashboard = () => {
                   <div className="p-6 space-y-4">
                     <div>
                       <h3 className="text-lg font-semibold text-card-foreground line-clamp-2">
-                        {record.experimentTitle}
+                        {record.experiment_title}
                       </h3>
                       <p className="text-sm text-muted-foreground mt-1">{record.subject}</p>
                     </div>
 
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>{record.studentName}</span>
-                      <span>{new Date(record.createdAt).toLocaleDateString()}</span>
+                      <span>{record.student_name}</span>
+                      <span>{new Date(record.created_at).toLocaleDateString()}</span>
                     </div>
 
                     {/* Actions */}

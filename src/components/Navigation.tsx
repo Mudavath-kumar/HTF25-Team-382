@@ -1,18 +1,21 @@
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, User, Menu } from "lucide-react";
+import { Moon, Sun, LogOut, Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Navigation = () => {
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     if (isDark) {
@@ -84,23 +87,35 @@ const Navigation = () => {
               )}
             </Button>
 
-            {/* Profile Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full smooth-transition hover:glow-primary"
-                >
-                  <User className="h-5 w-5" />
+            {/* User Menu or Auth Button */}
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="rounded-full smooth-transition hover:glow-primary"
+                  >
+                    {user.email}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="glass-card border-border/50">
+                  <DropdownMenuItem disabled>
+                    <span className="text-sm text-muted-foreground">{user.email}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut} className="text-destructive">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <Button className="gradient-primary text-white">
+                  Sign In
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="glass-card border-border/50">
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Account Settings</DropdownMenuItem>
-                <DropdownMenuItem>Log Out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </Link>
+            )}
 
             {/* Mobile Menu */}
             <Sheet>

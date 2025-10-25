@@ -1,7 +1,9 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import { Card } from "@/components/ui/card";
-import { Beaker, Code2, FileText, Zap, CheckCircle2, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Beaker, Code2, FileText, Zap, CheckCircle2, Sparkles, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const features = [
@@ -125,6 +127,127 @@ const Home = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="py-24 relative bg-gradient-to-b from-primary/5 to-transparent">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {[
+              { number: "10K+", label: "Lab Records Created" },
+              { number: "5K+", label: "Happy Students" },
+              { number: "100+", label: "Universities" },
+              { number: "99.9%", label: "Uptime" },
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className="text-center animate-fade-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-sm sm:text-base text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 space-y-4 animate-fade-up">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
+              Loved by Students Worldwide
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              See what students are saying about Aura Lab Scribe
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                name: "Sarah Johnson",
+                role: "Computer Science Student",
+                text: "This tool saved me hours every week! The AI suggestions for theory and conclusions are incredibly helpful.",
+                avatar: "👩‍💻"
+              },
+              {
+                name: "Rajesh Kumar",
+                role: "Engineering Student",
+                text: "The export feature is amazing. My lab records look professional and are always properly formatted.",
+                avatar: "👨‍🔬"
+              },
+              {
+                name: "Emily Chen",
+                role: "Physics Major",
+                text: "I love how easy it is to create and manage all my lab records in one place. Highly recommend!",
+                avatar: "👩‍🎓"
+              },
+            ].map((testimonial, index) => (
+              <Card
+                key={index}
+                className="glass-card p-6 border-border/50 hover:border-primary/50 smooth-transition hover:scale-105"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="space-y-4">
+                  <p className="text-muted-foreground italic leading-relaxed">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-2xl">
+                      {testimonial.avatar}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-card-foreground">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="glass-card p-12 border-primary/30 max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-3xl sm:text-4xl font-bold text-card-foreground">
+              Ready to Transform Your Lab Work?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Join thousands of students who are already creating professional lab records in minutes.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Link to="/auth">
+                <Button
+                  size="lg"
+                  className="gradient-primary text-white glow-primary px-8 py-6 text-lg"
+                >
+                  Get Started Free
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to="/help">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="glass-card border-border/50 px-8 py-6 text-lg"
+                >
+                  View Documentation
+                </Button>
+              </Link>
+            </div>
+          </Card>
         </div>
       </section>
 

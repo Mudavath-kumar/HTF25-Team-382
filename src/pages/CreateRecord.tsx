@@ -8,9 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChevronRight, ChevronLeft, Check, User, TestTube, BookOpen, Code2, FileOutput, MessageSquare } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const CreateRecord = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     studentName: "",
@@ -50,19 +53,35 @@ const CreateRecord = () => {
     }
   };
 
-  const handleSubmit = () => {
-    // Save to localStorage
-    const records = JSON.parse(localStorage.getItem("labRecords") || "[]");
-    const newRecord = {
-      id: Date.now().toString(),
-      ...formData,
-      createdAt: new Date().toISOString(),
-    };
-    records.push(newRecord);
-    localStorage.setItem("labRecords", JSON.stringify(records));
-    
-    toast.success("Lab record created successfully!");
-    navigate("/dashboard");
+  const handleSubmit = async () => {
+    if (!user) {
+      toast.error("You must be logged in to create records");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.from("lab_records").insert({
+        user_id: user.id,
+        student_name: formData.studentName,
+        roll_number: formData.rollNumber,
+        subject: formData.subject,
+        experiment_title: formData.experimentTitle,
+        experiment_aim: formData.experimentAim,
+        theory: formData.theory,
+        tools: formData.tools,
+        code: formData.code,
+        output: formData.output,
+        conclusion: formData.conclusion,
+      });
+
+      if (error) throw error;
+
+      toast.success("Lab record created successfully!");
+      navigate("/dashboard");
+    } catch (error: any) {
+      console.error("Error creating record:", error);
+      toast.error(error.message || "Failed to create lab record");
+    }
   };
 
   const renderField = (field: string) => {
