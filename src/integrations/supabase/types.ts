@@ -14,7 +14,87 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      lab_records: {
+        Row: {
+          code: string | null
+          conclusion: string | null
+          created_at: string
+          experiment_aim: string | null
+          experiment_title: string
+          id: string
+          output: string | null
+          roll_number: string | null
+          student_name: string
+          subject: string
+          theory: string | null
+          tools: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          code?: string | null
+          conclusion?: string | null
+          created_at?: string
+          experiment_aim?: string | null
+          experiment_title: string
+          id?: string
+          output?: string | null
+          roll_number?: string | null
+          student_name: string
+          subject: string
+          theory?: string | null
+          tools?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          code?: string | null
+          conclusion?: string | null
+          created_at?: string
+          experiment_aim?: string | null
+          experiment_title?: string
+          id?: string
+          output?: string | null
+          roll_number?: string | null
+          student_name?: string
+          subject?: string
+          theory?: string | null
+          tools?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          department: string | null
+          full_name: string | null
+          id: string
+          student_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id: string
+          student_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id?: string
+          student_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
