@@ -1,5 +1,5 @@
 import Navigation from "@/components/Navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -27,6 +27,17 @@ const CreateRecord = () => {
     output: "",
     conclusion: "",
   });
+
+  // Load template data if available
+  useEffect(() => {
+    const templateData = sessionStorage.getItem("templateData");
+    if (templateData) {
+      const parsed = JSON.parse(templateData);
+      setFormData((prev) => ({ ...prev, ...parsed }));
+      sessionStorage.removeItem("templateData");
+      toast.success("Template loaded!");
+    }
+  }, []);
 
   const steps = [
     { icon: <User className="w-5 h-5" />, title: "Student Info", fields: ["studentName", "rollNumber", "subject"] },

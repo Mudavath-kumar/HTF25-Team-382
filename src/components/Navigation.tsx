@@ -27,8 +27,12 @@ const Navigation = () => {
 
   const navLinks = [
     { label: "Home", path: "/" },
+    { label: "Templates", path: "/templates" },
     { label: "Create", path: "/create" },
     { label: "My Records", path: "/dashboard" },
+    { label: "AI Assistant", path: "/ai-assistant" },
+    { label: "Analytics", path: "/analytics" },
+    { label: "Profile", path: "/profile" },
     { label: "Settings", path: "/settings" },
     { label: "Help", path: "/help" },
   ];

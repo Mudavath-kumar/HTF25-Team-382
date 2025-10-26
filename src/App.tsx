@@ -12,6 +12,10 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
+import AIAssistant from "./pages/AIAssistant";
+import Templates from "./pages/Templates";
+import Profile from "./pages/Profile";
+import Analytics from "./pages/Analytics";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +54,31 @@ const App = () => (
               }
             />
             <Route path="/help" element={<Help />} />
+            <Route
+              path="/ai-assistant"
+              element={
+                <ProtectedRoute>
+                  <AIAssistant />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/templates" element={<Templates />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute>
+                  <Analytics />
+                </ProtectedRoute>
+              }
+            />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
