@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogIn, UserPlus, Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import FloatingShapes from "@/components/FloatingShapes";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -80,7 +81,8 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
+      <FloatingShapes />
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />

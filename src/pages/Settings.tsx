@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import FloatingShapes from "@/components/FloatingShapes";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -18,7 +19,8 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background relative">
+      <FloatingShapes />
       <Navigation />
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">

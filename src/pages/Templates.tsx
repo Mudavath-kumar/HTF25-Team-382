@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import FloatingShapes from "@/components/FloatingShapes";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Code2, Beaker, Network, Cpu, Database } from "lucide-react";
@@ -103,7 +104,8 @@ const Templates = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <FloatingShapes />
       <Navigation />
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">

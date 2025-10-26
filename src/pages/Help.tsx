@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import FloatingShapes from "@/components/FloatingShapes";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { HelpCircle, BookOpen, Zap, FileText, Download, Settings } from "lucide-react";
@@ -103,7 +104,8 @@ const Help = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background relative">
+      <FloatingShapes />
       <Navigation />
       <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-5xl">

@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
+import FloatingShapes from "@/components/FloatingShapes";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Beaker, Code2, FileText, Zap, CheckCircle2, Sparkles, ArrowRight } from "lucide-react";
@@ -46,7 +47,8 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background relative">
+      <FloatingShapes />
       <Navigation />
       <HeroSection />
 

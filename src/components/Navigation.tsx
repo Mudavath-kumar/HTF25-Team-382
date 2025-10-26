@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Moon, Sun, LogOut, Menu } from "lucide-react";
-import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "@/hooks/useTheme";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,17 +13,9 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Navigation = () => {
-  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
+  const { theme, toggleTheme } = useTheme();
 
   const navLinks = [
     { label: "Home", path: "/" },
@@ -81,10 +73,10 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsDark(!isDark)}
+              onClick={toggleTheme}
               className="rounded-full smooth-transition hover:glow-primary"
             >
-              {isDark ? (
+              {theme === "dark" ? (
                 <Sun className="h-5 w-5" />
               ) : (
                 <Moon className="h-5 w-5" />
