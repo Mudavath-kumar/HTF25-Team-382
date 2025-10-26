@@ -2,6 +2,10 @@
  <img width="1745" height="843" alt="image" src="https://github.com/user-attachments/assets/74916c96-d765-4edb-9d2e-b0f67a0491b4" />
 
 
+Deployed Link:
+
+https://htf-25-team-382.vercel.app/
+
 A Vite + React + TypeScript app styled with Tailwind and shadcn/ui, integrating Supabase for auth and serverless functions.
 
 ## Tech stack
